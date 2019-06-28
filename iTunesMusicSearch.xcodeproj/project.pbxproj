@@ -16,6 +16,7 @@
 		B16C6E3722C5B930003F1359 /* iTunesMusicSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E3622C5B930003F1359 /* iTunesMusicSearchTests.swift */; };
 		B16C6E4222C5B930003F1359 /* iTunesMusicSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E4122C5B930003F1359 /* iTunesMusicSearchUITests.swift */; };
 		B16C6E5022C60FD4003F1359 /* iTunesMusicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */; };
+		B16C6E5222C63D3F003F1359 /* iTunesMusicInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B16C6E4122C5B930003F1359 /* iTunesMusicSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicSearchUITests.swift; sourceTree = "<group>"; };
 		B16C6E4322C5B930003F1359 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicInfo.swift; sourceTree = "<group>"; };
+		B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicInfoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				B16C6E2022C5B92E003F1359 /* ViewController.swift */,
 				B16C6E2222C5B92E003F1359 /* Main.storyboard */,
 				B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */,
+				B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */,
 				B16C6E2822C5B930003F1359 /* Assets.xcassets */,
 				B16C6E2A22C5B930003F1359 /* LaunchScreen.storyboard */,
 				B16C6E2D22C5B930003F1359 /* Info.plist */,
@@ -264,6 +267,7 @@
 			files = (
 				B16C6E2722C5B92E003F1359 /* iTunesMusicSearch.xcdatamodeld in Sources */,
 				B16C6E5022C60FD4003F1359 /* iTunesMusicInfo.swift in Sources */,
+				B16C6E5222C63D3F003F1359 /* iTunesMusicInfoCell.swift in Sources */,
 				B16C6E2122C5B92E003F1359 /* ViewController.swift in Sources */,
 				B16C6E1F22C5B92E003F1359 /* AppDelegate.swift in Sources */,
 			);

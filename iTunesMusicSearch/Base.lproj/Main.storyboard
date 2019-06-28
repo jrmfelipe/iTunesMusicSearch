@@ -72,6 +72,76 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="edV-TJ-oTv">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="musicInfoCellIdentifier" rowHeight="100" id="BVr-Pp-a0u" userLabel="iTunes Music Info Cell" customClass="iTunesMusicInfoCell" customModule="iTunesMusicSearch" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BVr-Pp-a0u" id="shK-aE-UzJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cvx-V0-1aS">
+                                                    <rect key="frame" x="10" y="10.5" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="PFH-hN-dBZ"/>
+                                                        <constraint firstAttribute="height" constant="80" id="Vei-P2-CyK"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="che-Zh-3QH" userLabel="Music Title Label">
+                                                    <rect key="frame" x="98" y="10.5" width="306" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Hux-9t-0U6"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xts-XT-DmG" userLabel="Artist Name Label">
+                                                    <rect key="frame" x="98" y="39.5" width="306" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Album" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaB-KD-O3W" userLabel="Album Name Label">
+                                                    <rect key="frame" x="98" y="68.5" width="306" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="apo-Y3-QyR">
+                                                    <rect key="frame" x="41" y="41" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xts-XT-DmG" firstAttribute="height" secondItem="che-Zh-3QH" secondAttribute="height" id="0dI-yQ-DVO"/>
+                                                <constraint firstAttribute="bottom" secondItem="cvx-V0-1aS" secondAttribute="bottom" constant="10" id="8Bh-ur-IOT"/>
+                                                <constraint firstAttribute="trailing" secondItem="xts-XT-DmG" secondAttribute="trailing" constant="10" id="FjP-Lb-B4T"/>
+                                                <constraint firstItem="cvx-V0-1aS" firstAttribute="leading" secondItem="shK-aE-UzJ" secondAttribute="leading" constant="10" id="JQu-oQ-ibh"/>
+                                                <constraint firstItem="xts-XT-DmG" firstAttribute="top" secondItem="che-Zh-3QH" secondAttribute="bottom" constant="8" id="Pl9-ke-Hyp"/>
+                                                <constraint firstItem="aaB-KD-O3W" firstAttribute="height" secondItem="che-Zh-3QH" secondAttribute="height" id="Zgk-A5-xCz"/>
+                                                <constraint firstAttribute="trailing" secondItem="aaB-KD-O3W" secondAttribute="trailing" constant="10" id="bRb-Cz-X3H"/>
+                                                <constraint firstAttribute="bottom" secondItem="aaB-KD-O3W" secondAttribute="bottom" constant="10.5" id="g6m-Cg-Dwb"/>
+                                                <constraint firstItem="aaB-KD-O3W" firstAttribute="width" secondItem="che-Zh-3QH" secondAttribute="width" id="mgI-Zv-gXY"/>
+                                                <constraint firstItem="xts-XT-DmG" firstAttribute="leading" secondItem="che-Zh-3QH" secondAttribute="leading" id="q23-LI-7dJ"/>
+                                                <constraint firstItem="xts-XT-DmG" firstAttribute="width" secondItem="che-Zh-3QH" secondAttribute="width" id="qbe-df-eh5"/>
+                                                <constraint firstAttribute="trailing" secondItem="che-Zh-3QH" secondAttribute="trailing" constant="10" id="rTz-yE-lMl"/>
+                                                <constraint firstItem="che-Zh-3QH" firstAttribute="leading" secondItem="cvx-V0-1aS" secondAttribute="trailing" constant="8" id="sPB-IU-isc"/>
+                                                <constraint firstItem="cvx-V0-1aS" firstAttribute="top" secondItem="shK-aE-UzJ" secondAttribute="top" constant="10" id="upV-x9-Lrh"/>
+                                                <constraint firstItem="aaB-KD-O3W" firstAttribute="top" secondItem="xts-XT-DmG" secondAttribute="bottom" constant="8" id="vG3-3E-HZB"/>
+                                                <constraint firstItem="aaB-KD-O3W" firstAttribute="leading" secondItem="che-Zh-3QH" secondAttribute="leading" id="zPs-xy-RYR"/>
+                                                <constraint firstItem="che-Zh-3QH" firstAttribute="top" secondItem="shK-aE-UzJ" secondAttribute="top" constant="10" id="zqi-ll-Opn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="albumNameLabel" destination="aaB-KD-O3W" id="2xI-ey-gmx"/>
+                                            <outlet property="artistNameLabel" destination="xts-XT-DmG" id="kl0-IH-rPw"/>
+                                            <outlet property="artworkImageView" destination="cvx-V0-1aS" id="U6o-20-fDi"/>
+                                            <outlet property="loadingActivityIndicatorView" destination="apo-Y3-QyR" id="ieg-VZ-DYG"/>
+                                            <outlet property="musicTitleLabel" destination="che-Zh-3QH" id="KBx-r7-fxV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="fax-kO-dcP"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="2de-Ip-cko"/>
@@ -100,14 +170,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="XbT-Ju-KSr">
-                    <connections>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="nWA-S3-vIp"/>
-                        <outlet property="searchContentsController" destination="BYZ-38-t0r" id="U3N-CX-JHK"/>
-                        <outlet property="searchResultsDataSource" destination="BYZ-38-t0r" id="O1W-YO-0G9"/>
-                        <outlet property="searchResultsDelegate" destination="BYZ-38-t0r" id="hGp-m2-hE0"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="120.53571428571428"/>
         </scene>

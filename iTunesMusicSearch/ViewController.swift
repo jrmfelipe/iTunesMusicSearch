@@ -15,7 +15,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     
     let session = URLSession.shared
-    let searchLimit = 6  // lower the value to test "load more result"
+    var searchOffset = 0
+    let searchLimit = 5  // lower the value to test "load more result"
    
     var model = [iTunesMusicInfo]() //Initialising Model Array
 
@@ -40,9 +41,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     
     //MARK: - Actions
     @IBAction func searchButtonTapped() {
+        searchTextField.resignFirstResponder()
         
-        print("invoke search here....")
-        let url = URL(string: "https://itunes.apple.com/search?media=music&term=work&limit=\(self.searchLimit)")
+        // start a new search request, remove previous content
+        DispatchQueue.main.async {
+            self.model.removeAll()
+            self.tableView.reloadData()
+        }
+        //media=music&
+        let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
         
         let task = session.dataTask(with: url!, completionHandler: { data, response, error in
             
@@ -59,9 +66,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
 
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                print(json)
-                
-                // TODO: parse JSON here
+                // parse JSON here
                 if let resultInfo = json as? [String: Any] {
                     if let resultCount = resultInfo["resultCount"] as? Int {
                         if  resultCount > 0 {
@@ -72,6 +77,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
+                                    //TODO: if  resultCount < searchLimit then we got all the search results.
+                                    self.searchOffset += resultCount
+                                    
                                 }
                             }
                         }
@@ -91,19 +99,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cellReuseIdentifier: String = "CellIdentifier"
-        var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)
-        if (cell == nil) {
-            cell = UITableViewCell(style:UITableViewCell.CellStyle.subtitle, reuseIdentifier:cellReuseIdentifier)
-        }
-        
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: iTunesMusicInfoCell.cellIdentifier, for: indexPath) as! iTunesMusicInfoCell
         
         // Configure the cell’s contents.
-        cell?.textLabel!.text = model[indexPath.row].artistName
+        cell.musicTitleLabel.text = model[indexPath.row].musicTitle
+        cell.artistNameLabel.text = model[indexPath.row].artistName
+        cell.albumNameLabel.text = model[indexPath.row].albumName
+        cell.fetchArtworkImageFromURL(model[indexPath.row].artworkUrl)
         
-        return cell!
+        return cell
     }
     
     //MARK: - UITableViewDelegate
