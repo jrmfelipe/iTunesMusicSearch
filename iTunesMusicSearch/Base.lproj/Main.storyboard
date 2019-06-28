@@ -72,6 +72,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="edV-TJ-oTv">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="fax-kO-dcP"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2de-Ip-cko"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -92,6 +96,7 @@
                     <connections>
                         <outlet property="searchButton" destination="tHJ-em-NBC" id="XSj-ag-Z3i"/>
                         <outlet property="searchTextField" destination="yK0-0k-Yn1" id="yHm-g6-KrE"/>
+                        <outlet property="tableView" destination="edV-TJ-oTv" id="QZ0-NL-hcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
