@@ -16,8 +16,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     
     let session = URLSession.shared
     var searchOffset = 0
-    let searchLimit = 5  // lower the value to test "load more result"
-   
+    let searchLimit = 10  // lower the value to test "load more result"
+    var endOfSearchResult = false
+    var fetchingMore = false
+    
     var model = [iTunesMusicInfo]() //Initialising Model Array
 
     override func viewDidLoad() {
@@ -44,23 +46,35 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
         searchTextField.resignFirstResponder()
         
         // start a new search request, remove previous content
+        
+        self.endOfSearchResult = false
+        self.searchOffset = 0
+        self.model.removeAll()
+        
         DispatchQueue.main.async {
-            self.model.removeAll()
             self.tableView.reloadData()
         }
         //media=music&
-        let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
-        
+        //let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
+        fetchData()
+        /*
+        //self.showSpinner()
+        print("REY 1")
+        print(url!)
         let task = session.dataTask(with: url!, completionHandler: { data, response, error in
             
             //TODO: show activityview
             if error != nil {
                 self.handleClientError(error!)
+                self.fetchingMore = false
+                //self.removeSpinner()
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
                     self.handleServerError(response!)
+                    self.fetchingMore = false
+                    //self.removeSpinner()
                     return
             }
 
@@ -77,9 +91,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    //TODO: if  resultCount < searchLimit then we got all the search results.
+                                    //if  resultCount < searchLimit then we got all the search results.
+                                    if resultCount < self.searchLimit {
+                                        self.endOfSearchResult = true
+                                    }
                                     self.searchOffset += resultCount
-                                    
+                                    self.fetchingMore = false
+                                    //self.removeSpinner()
                                 }
                             }
                         }
@@ -87,27 +105,112 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
                 }
             } catch {
                 self.handleClientError(error)
+                self.fetchingMore = false
+                //self.removeSpinner()
             }
         })
         task.resume()
-        
+ */
+    }
+    
+    //MARK: - fetch Data
+    private func fetchData() {
+        if self.endOfSearchResult {
+            // No need to send another request we have reached the end of the search result
+            return
+        }
+        fetchingMore = true
+        print("fethcingMore")
+        if searchOffset != 0 {
+            // load only when fetching a new batch of search result
+            tableView.reloadSections(IndexSet(integer: 1), with: .none)
+        }
+        DispatchQueue.main.async(execute: {
+            let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
+            MusicHTTP.execute(request: url!, completion: { result in
+                guard case .success(let resultInfo2) = result else {
+                    print("not success")
+                    guard case .failure(let error) = result else {
+                        print("no error")
+                        self.fetchingMore = false
+                        return
+                    }
+                    self.handleClientError(error)
+                    self.fetchingMore = false
+                    return
+                }
+                if let resultCount = resultInfo2!["resultCount"] as? Int {
+                    if  resultCount > 0 {
+                        if let results = resultInfo2!["results"] as? [[String: Any]] {
+                            for resultDetail in results {
+                                // iterate here
+                                self.model.append(iTunesMusicInfo(resultDetail)) // adding now value in Model array
+                            }
+                            if resultCount < self.searchLimit {
+                                self.endOfSearchResult = true
+                            }
+                            self.searchOffset += resultCount
+                        }
+                    }
+                }
+                DispatchQueue.main.async {
+                    UIView.performWithoutAnimation {
+                        let contentOffset = self.tableView.contentOffset
+                        self.tableView.reloadData()
+                        self.tableView.layoutIfNeeded()
+                        self.tableView.setContentOffset(contentOffset, animated: false)
+                    }
+                    self.fetchingMore = false
+                }
+            })
+        })
     }
     
     //MARK: - UITableViewDataSource
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.count
+        if section == 0 {
+            return model.count
+        } else if section == 1 && fetchingMore {
+            return 1
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: iTunesMusicInfoCell.cellIdentifier, for: indexPath) as! iTunesMusicInfoCell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: iTunesMusicInfoCell.cellIdentifier, for: indexPath) as! iTunesMusicInfoCell
+            
+            // Configure the cell’s contents.
+            cell.musicTitleLabel.text = model[indexPath.row].musicTitle
+            cell.artistNameLabel.text = model[indexPath.row].artistName
+            cell.albumNameLabel.text = model[indexPath.row].albumName
+            cell.fetchArtworkImageFromURL(model[indexPath.row].artworkUrl)
+            
+            return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: LoadingCell.cellIdentifier, for: indexPath) as! LoadingCell
+            cell.spinner.startAnimating()
+            return cell
+        }
         
-        // Configure the cell’s contents.
-        cell.musicTitleLabel.text = model[indexPath.row].musicTitle
-        cell.artistNameLabel.text = model[indexPath.row].artistName
-        cell.albumNameLabel.text = model[indexPath.row].albumName
-        cell.fetchArtworkImageFromURL(model[indexPath.row].artworkUrl)
         
-        return cell
+    }
+    
+    //MARK: - UIScrollViewDelagate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        //If we reach the end of the table.
+        if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
+            //request for the next page, result will be added
+            if !fetchingMore {
+                fetchData()
+            }
+        }
     }
     
     //MARK: - UITableViewDelegate
@@ -130,6 +233,4 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
         }
         return false
     }
- 
 }
-
