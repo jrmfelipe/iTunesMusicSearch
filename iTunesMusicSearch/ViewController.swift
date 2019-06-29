@@ -29,16 +29,28 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     }
     
     //MARK: - Error Handling
-    func handleClientError(_ error: Error) {
-        
-        //TODO: handle client errors here
-        print(error)
-    }
-    
-    func handleServerError(_ response: URLResponse) {
-        
-        //TODO: handle server errors here
-        print(response)
+    func handleError(_ error: Error) {
+        //handle client errors here
+        guard let musicHTTPError = error as? MusicHTTPError else {
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        switch musicHTTPError {
+        case .noResponse:
+            let errorMessage = "Looks like the server is taking to long to respond, this can be caused by either poor connectivity or an error with our servers. Please try again in a while"
+            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            break
+        case .unsuccesfulStatusCode(let code):
+            let errorMessage = "\(code): Looks like something went wrong on our end."
+            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            break
+        }
     }
     
     //MARK: - Actions
@@ -57,60 +69,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
         //media=music&
         //let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
         fetchData()
-        /*
-        //self.showSpinner()
-        print("REY 1")
-        print(url!)
-        let task = session.dataTask(with: url!, completionHandler: { data, response, error in
-            
-            //TODO: show activityview
-            if error != nil {
-                self.handleClientError(error!)
-                self.fetchingMore = false
-                //self.removeSpinner()
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse,
-                (200...299).contains(httpResponse.statusCode) else {
-                    self.handleServerError(response!)
-                    self.fetchingMore = false
-                    //self.removeSpinner()
-                    return
-            }
-
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                // parse JSON here
-                if let resultInfo = json as? [String: Any] {
-                    if let resultCount = resultInfo["resultCount"] as? Int {
-                        if  resultCount > 0 {
-                            if let results = resultInfo["results"] as? [[String: Any]] {
-                                for result in results {
-                                    // iterate here
-                                    self.model.append(iTunesMusicInfo(result)) // adding now value in Model array
-                                }
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                    //if  resultCount < searchLimit then we got all the search results.
-                                    if resultCount < self.searchLimit {
-                                        self.endOfSearchResult = true
-                                    }
-                                    self.searchOffset += resultCount
-                                    self.fetchingMore = false
-                                    //self.removeSpinner()
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch {
-                self.handleClientError(error)
-                self.fetchingMore = false
-                //self.removeSpinner()
-            }
-        })
-        task.resume()
- */
     }
     
     //MARK: - fetch Data
@@ -119,23 +77,25 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
             // No need to send another request we have reached the end of the search result
             return
         }
-        fetchingMore = true
-        print("fethcingMore")
+        
         if searchOffset != 0 {
             // load only when fetching a new batch of search result
             tableView.reloadSections(IndexSet(integer: 1), with: .none)
+            print("fetching for the 1st time")
+            
+        } else {
+            
+            print("fethcing more result(\(searchOffset))")
         }
         DispatchQueue.main.async(execute: {
             let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
             MusicHTTP.execute(request: url!, completion: { result in
                 guard case .success(let resultInfo2) = result else {
-                    print("not success")
                     guard case .failure(let error) = result else {
-                        print("no error")
                         self.fetchingMore = false
                         return
                     }
-                    self.handleClientError(error)
+                    self.handleError(error)
                     self.fetchingMore = false
                     return
                 }
@@ -208,12 +168,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
         if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
             //request for the next page, result will be added
             if !fetchingMore {
+                fetchingMore = true
                 fetchData()
             }
         }
     }
     
     //MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 
     //MARK: - UITextFieldDelegate
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
