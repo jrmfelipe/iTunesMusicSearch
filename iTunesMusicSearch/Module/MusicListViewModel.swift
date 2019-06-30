@@ -61,6 +61,7 @@ class MusicListViewModel {
         }
         if self.endOfSearchResult {
             // No need to send another request we have reached the end of the search result
+            self.isLoading = false
             return
         }
         apiService.fetchMusic(term: search, offset: offset, limit: searchLimit) { [weak self] (success, musics, error) in
@@ -138,7 +139,7 @@ class MusicListViewModel {
 
 extension MusicListViewModel {
     func userPressed(at indexPath: IndexPath ){
-        //let music = self.musics[indexPath.row]
+        //let cellViewModel = self.cellViewModels[indexPath.row]
         // TODO: handle music preview playback here
     }
 }

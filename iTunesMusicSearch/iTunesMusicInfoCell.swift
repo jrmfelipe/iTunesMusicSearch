@@ -34,9 +34,7 @@ class iTunesMusicInfoCell: UITableViewCell {
     
     func fetchArtworkImageFromURL(_ urlString: String?) {
         //lazy loading implement here.
-        DispatchQueue.main.async {
-            self.updatingArtworkView(true)
-        }
+        self.updatingArtworkView(true)
         let task =  URLSession.shared.dataTask(with: URL(string:urlString!)!, completionHandler: { data, response, error in
             DispatchQueue.main.async {
                 
@@ -59,7 +57,12 @@ class iTunesMusicInfoCell: UITableViewCell {
     
     private func updatingArtworkView(_ loading: Bool) {
         // Hide/Show activity indicator and artwork image view
-        self.loadingActivityIndicatorView.isHidden = !loading
-        self.artworkImageView.isHidden = loading
+        DispatchQueue.main.async {
+            if loading == true {
+                self.loadingActivityIndicatorView.startAnimating()
+            }
+            self.loadingActivityIndicatorView.isHidden = !loading
+            self.artworkImageView.isHidden = loading
+        }
     }
 }

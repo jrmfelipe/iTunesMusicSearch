@@ -105,11 +105,13 @@ class ViewController: UIViewController {
             return
         }
         
+        let escapedSearchTerm = searchTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        
         //If we reach the end of the table.
         if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height) {
             //request for the next page, result will be added
             if !viewModel.fetchingMore {
-                viewModel.fetchData(searchTerm, initialFetch: false)
+                viewModel.fetchData(escapedSearchTerm!, initialFetch: false)
             }
         }
     }
@@ -133,8 +135,6 @@ extension ViewController: UITextFieldDelegate {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: iTunesMusicInfoCell.cellIdentifier, for: indexPath) as? iTunesMusicInfoCell else {
                 fatalError("Cell not exists in storyboard")
