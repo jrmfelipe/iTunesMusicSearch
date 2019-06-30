@@ -41,7 +41,7 @@ class MusicListViewModel {
     var searchOffset = 0
     let searchLimit = 25  // lower the value to test "load more result"
     var endOfSearchResult = false
-    var searchString = ""
+    var fetchingMore = false
     
     var reloadTableViewClosure: (()->())?
     var showAlertClosure: (()->())?
@@ -51,14 +51,25 @@ class MusicListViewModel {
         self.apiService = apiService
     }
     
-    func initFetch(search: String) {
-        self.isLoading = true
-        apiService.fetchMusic(term: search, offset: 0, limit: searchLimit) { [weak self] (success, musics, error) in
-            self?.isLoading = false
+    func fetchData(_ search: String, initialFetch: Bool) {
+        var offset = searchOffset
+        if initialFetch == true {
+            self.isLoading = true
+        } else {
+            self.fetchingMore = true
+            offset += 1
+        }
+        if self.endOfSearchResult {
+            // No need to send another request we have reached the end of the search result
+            return
+        }
+        apiService.fetchMusic(term: search, offset: offset, limit: searchLimit) { [weak self] (success, musics, error) in
+            if initialFetch == true {
+                self?.isLoading = false
+            }
             if let error = error {
-                self?.alertMessage = error.localizedDescription
-                
                 guard let musicHTTPError = error as? MusicHTTPError else {
+                    self?.fetchingMore = false
                     self?.alertMessage = error.localizedDescription
                     return
                 }
@@ -70,10 +81,26 @@ class MusicListViewModel {
                     self?.alertMessage = "\(code): Looks like something went wrong on our end."
                     break
                 }
+                self?.fetchingMore = false
             } else {
-                self?.processFetchedPhoto(musics: musics)
+                if musics.isEmpty {
+                    self?.alertMessage = "Sorry, we couldn't find any match"
+                    return
+                }
+                self!.searchOffset += musics.count
+                if musics.count < self!.searchLimit {
+                    self?.endOfSearchResult = true
+                }
+                self?.processFetchedMusic(musics: musics)
             }
         }
+    }
+    
+    func removeAll() {
+        self.endOfSearchResult = false
+        self.searchOffset = 0
+        self.musics.removeAll()
+        self.cellViewModels.removeAll()
     }
     
     func getCellViewModel(at indexPath: IndexPath ) -> MusicListCellViewModel {
@@ -82,20 +109,29 @@ class MusicListViewModel {
     
     func createCellViewModel(music: Music ) -> MusicListCellViewModel {
         
-        return MusicListCellViewModel( musicTitleText: "",
-                                       artistNameText: "",
-                                       albumNameText: "",
-                                       artworkUrl: "",
-                                       musicPreviewUrl: "")
+        let artistName = "by: \(music.artistName)"
+        
+        return MusicListCellViewModel( musicTitleText: music.musicTitle,
+                                       artistNameText: artistName,
+                                       albumNameText: music.albumName,
+                                       artworkUrl: music.artworkUrl,
+                                       musicPreviewUrl: music.previewUrl)
     }
     
-    private func processFetchedPhoto(musics: [Music] ) {
+    private func processFetchedMusic(musics: [Music] ) {
         self.musics = musics // Cache
         var vms = [MusicListCellViewModel]()
         for music in musics {
-            vms.append( createCellViewModel(music: music) )
+            
+            let cellViewModel = createCellViewModel(music: music)
+            // Need to test duplicate here
+            if !self.cellViewModels.contains(cellViewModel) {
+                vms.append(cellViewModel)
+            } else {
+                // we have a duplicate result
+            }
         }
-        self.cellViewModels = vms
+        self.cellViewModels.append(contentsOf: vms)
     }
     
 }
@@ -111,6 +147,14 @@ struct MusicListCellViewModel {
     let musicTitleText: String
     let artistNameText: String
     let albumNameText: String
-    let artworkUrl: String
-    let musicPreviewUrl: String
+    let artworkUrl: String?
+    let musicPreviewUrl: String?
+}
+
+extension MusicListCellViewModel: Equatable {
+    static func == (lhs: MusicListCellViewModel, rhs: MusicListCellViewModel) -> Bool {
+        return lhs.musicTitleText == rhs.musicTitleText &&
+            lhs.artistNameText == rhs.artistNameText &&
+            lhs.albumNameText == rhs.albumNameText
+    }
 }

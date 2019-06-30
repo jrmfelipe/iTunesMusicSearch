@@ -33,13 +33,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music-app-icon-ios" translatesAutoresizingMaskIntoConstraints="NO" id="g7m-gh-BrU">
+                                <rect key="frame" x="20" y="287" width="374" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="SAQ-h8-ljf"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Tiz-Dg-6A0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="09S-YZ-kng"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tiz-Dg-6A0" secondAttribute="trailing" constant="20" id="FKy-iw-mRr"/>
+                            <constraint firstItem="gww-iU-96x" firstAttribute="top" secondItem="g7m-gh-BrU" secondAttribute="bottom" constant="8" id="H8G-SM-PyZ"/>
                             <constraint firstItem="gww-iU-96x" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HGS-R8-9t0"/>
                             <constraint firstItem="gww-iU-96x" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Wbd-wI-ged"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="g7m-gh-BrU" secondAttribute="trailing" constant="20" id="YDk-NF-5ev"/>
+                            <constraint firstItem="g7m-gh-BrU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="m9j-YC-sS6"/>
                             <constraint firstItem="Tiz-Dg-6A0" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pqJ-xm-Ikk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -50,4 +59,7 @@
             <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="music-app-icon-ios" width="256" height="256"/>
+    </resources>
 </document>
