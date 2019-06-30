@@ -193,9 +193,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     //MARK: - UITextFieldDelegate
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        searchButton.isEnabled = !string.isEmpty
-        
-        
+        searchButton.isEnabled = !textFieldToChange.text!.isEmpty
         return true
     }
     
