@@ -27,6 +27,9 @@
                                     <navigationItem title="Music Search" id="EEQ-zv-vwh"/>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nlD-VB-l55">
+                                <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQO-Cs-MnU" userLabel="Search View Container">
                                 <rect key="frame" x="0.0" y="88" width="414" height="36"/>
                                 <subviews>
@@ -69,7 +72,7 @@
                                     <constraint firstAttribute="trailing" secondItem="tHJ-em-NBC" secondAttribute="trailing" constant="10" id="qnP-lf-ocu"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="edV-TJ-oTv">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="edV-TJ-oTv">
                                 <rect key="frame" x="0.0" y="124" width="414" height="738"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -174,20 +177,25 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="nlD-VB-l55" firstAttribute="top" secondItem="WQO-Cs-MnU" secondAttribute="bottom" id="3V4-F8-Na7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="edV-TJ-oTv" secondAttribute="bottom" id="3q8-aG-R6M"/>
                             <constraint firstItem="WQO-Cs-MnU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="423-P8-yWa"/>
                             <constraint firstItem="edV-TJ-oTv" firstAttribute="top" secondItem="WQO-Cs-MnU" secondAttribute="bottom" id="ABr-LQ-XyO"/>
                             <constraint firstItem="11l-Ye-lXc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Rjk-Pu-JjW"/>
+                            <constraint firstItem="nlD-VB-l55" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bKL-US-bp2"/>
                             <constraint firstItem="WQO-Cs-MnU" firstAttribute="top" secondItem="11l-Ye-lXc" secondAttribute="bottom" id="dPR-D8-ynj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="edV-TJ-oTv" secondAttribute="trailing" id="hc1-nB-pcP"/>
                             <constraint firstItem="11l-Ye-lXc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="iLY-B6-5B8"/>
                             <constraint firstItem="11l-Ye-lXc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iSM-Br-k31"/>
                             <constraint firstItem="edV-TJ-oTv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="l43-7v-pHJ"/>
                             <constraint firstItem="WQO-Cs-MnU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oN8-C0-YlY"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nlD-VB-l55" secondAttribute="trailing" id="rcQ-PI-3EF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nlD-VB-l55" secondAttribute="bottom" id="t8D-X5-Rwg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="nlD-VB-l55" id="mWq-pk-cxp"/>
                         <outlet property="searchButton" destination="tHJ-em-NBC" id="XSj-ag-Z3i"/>
                         <outlet property="searchTextField" destination="yK0-0k-Yn1" id="yHm-g6-KrE"/>
                         <outlet property="tableView" destination="edV-TJ-oTv" id="QZ0-NL-hcR"/>
