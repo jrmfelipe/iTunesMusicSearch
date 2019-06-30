@@ -66,29 +66,35 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        //media=music&
-        //let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
         fetchData()
     }
     
     //MARK: - fetch Data
     private func fetchData() {
+        var offset =  searchOffset
         if self.endOfSearchResult {
             // No need to send another request we have reached the end of the search result
             return
         }
+        guard let searchTerm = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !searchTerm.isEmpty else {
+            return
+        }
+        let escapedSearchTerm = searchTerm.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         
-        if searchOffset != 0 {
+        if offset != 0 {
+            offset += 1
             // load only when fetching a new batch of search result
-            tableView.reloadSections(IndexSet(integer: 1), with: .none)
-            print("fetching for the 1st time")
+            self.tableView.reloadSections(IndexSet(integer: 1), with: .none)
+            print("fethcing more result for \"\(searchTerm)\" at offset \(offset)")
             
         } else {
             
-            print("fethcing more result(\(searchOffset))")
+            print("fetching for the 1st time")
         }
+        
         DispatchQueue.main.async(execute: {
-            let url = URL(string: "https://itunes.apple.com/search?term=work&offset=\(self.searchOffset)&limit=\(self.searchLimit)")
+            //&media=music might be a required param since we are searching music
+            let url = URL(string: "https://itunes.apple.com/search?term=\(escapedSearchTerm!)&offset=\(offset)&limit=\(self.searchLimit)")
             MusicHTTP.execute(request: url!, completion: { result in
                 guard case .success(let resultInfo2) = result else {
                     guard case .failure(let error) = result else {
