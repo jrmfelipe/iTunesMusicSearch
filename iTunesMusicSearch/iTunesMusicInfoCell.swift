@@ -18,6 +18,15 @@ class iTunesMusicInfoCell: UITableViewCell {
     
     static let cellIdentifier = "musicInfoCellIdentifier"
     
+    var musicListCellViewModel : MusicListCellViewModel? {
+        didSet {
+            musicTitleLabel.text = musicListCellViewModel?.musicTitleText
+            artistNameLabel.text = musicListCellViewModel?.artistNameText
+            albumNameLabel.text = musicListCellViewModel?.albumNameText
+            fetchArtworkImageFromURL(musicListCellViewModel?.artworkUrl)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         artworkImageView.layer.cornerRadius = 10

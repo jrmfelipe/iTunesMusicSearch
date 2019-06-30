@@ -1,19 +1,23 @@
 //
-//  iTunesMusicInfo.swift
+//  Music.swift
 //  iTunesMusicSearch
 //
-//  Created by Rey Felipe on 6/28/19.
+//  Created by Rey Felipe on 6/30/19.
 //  Copyright © 2019 Rey Felipe. All rights reserved.
 //
 
 import Foundation
 
-struct iTunesMusicInfo {
-    var musicTitle: String // JSON equivalent trackName
-    var artistName: String // JSON equivalent artistName
-    var albumName: String // JSON equivalent collectionName
-    var artworkUrl: String? // JSON equivalent artworkUrl100 > artworkUrl60 > artworkUrl30
-    var previewUrl: String? // JSON equivalent previewUrl
+struct Musics: Codable {
+    var music: [Music]
+}
+
+struct Music: Codable {
+    let musicTitle: String // JSON equivalent trackName
+    let artistName: String // JSON equivalent artistName
+    let albumName: String // JSON equivalent collectionName
+    let artworkUrl: String? // JSON equivalent artworkUrl100 > artworkUrl60 > artworkUrl30
+    let previewUrl: String? // JSON equivalent previewUrl
     
     init(_ dictionary: [String: Any]) {
         self.musicTitle = dictionary["trackName"] as? String ?? ""
@@ -24,10 +28,10 @@ struct iTunesMusicInfo {
     }
 }
 
-extension iTunesMusicInfo: Equatable {
-    static func == (lhs: iTunesMusicInfo, rhs: iTunesMusicInfo) -> Bool {
+extension Music: Equatable {
+    static func == (lhs: Music, rhs: Music) -> Bool {
         return lhs.musicTitle == rhs.musicTitle &&
-               lhs.artistName == rhs.artistName &&
-               lhs.albumName == rhs.albumName
+            lhs.artistName == rhs.artistName &&
+            lhs.albumName == rhs.albumName
     }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B115E52B22C8960400D5C40F /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115E52A22C8960400D5C40F /* Music.swift */; };
+		B115E52E22C896CA00D5C40F /* MusicListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115E52D22C896CA00D5C40F /* MusicListViewModel.swift */; };
+		B115E53122C89CCE00D5C40F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115E53022C89CCE00D5C40F /* APIService.swift */; };
 		B16C6E1F22C5B92E003F1359 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E1E22C5B92E003F1359 /* AppDelegate.swift */; };
 		B16C6E2122C5B92E003F1359 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E2022C5B92E003F1359 /* ViewController.swift */; };
 		B16C6E2422C5B92E003F1359 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B16C6E2222C5B92E003F1359 /* Main.storyboard */; };
@@ -15,7 +18,6 @@
 		B16C6E2C22C5B930003F1359 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B16C6E2A22C5B930003F1359 /* LaunchScreen.storyboard */; };
 		B16C6E3722C5B930003F1359 /* iTunesMusicSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E3622C5B930003F1359 /* iTunesMusicSearchTests.swift */; };
 		B16C6E4222C5B930003F1359 /* iTunesMusicSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E4122C5B930003F1359 /* iTunesMusicSearchUITests.swift */; };
-		B16C6E5022C60FD4003F1359 /* iTunesMusicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */; };
 		B16C6E5222C63D3F003F1359 /* iTunesMusicInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */; };
 		B16C6E5422C745FC003F1359 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E5322C745FB003F1359 /* LoadingCell.swift */; };
 		B16C6E5622C7585E003F1359 /* MusicHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16C6E5522C7585B003F1359 /* MusicHTTP.swift */; };
@@ -39,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B115E52A22C8960400D5C40F /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		B115E52D22C896CA00D5C40F /* MusicListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewModel.swift; sourceTree = "<group>"; };
+		B115E53022C89CCE00D5C40F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B16C6E1B22C5B92E003F1359 /* iTunesMusicSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesMusicSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B16C6E1E22C5B92E003F1359 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B16C6E2022C5B92E003F1359 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,7 +58,6 @@
 		B16C6E3D22C5B930003F1359 /* iTunesMusicSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTunesMusicSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B16C6E4122C5B930003F1359 /* iTunesMusicSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicSearchUITests.swift; sourceTree = "<group>"; };
 		B16C6E4322C5B930003F1359 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicInfo.swift; sourceTree = "<group>"; };
 		B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesMusicInfoCell.swift; sourceTree = "<group>"; };
 		B16C6E5322C745FB003F1359 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		B16C6E5522C7585B003F1359 /* MusicHTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHTTP.swift; sourceTree = "<group>"; };
@@ -84,6 +88,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B115E52922C895ED00D5C40F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B115E52A22C8960400D5C40F /* Music.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B115E52C22C8969F00D5C40F /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				B115E52D22C896CA00D5C40F /* MusicListViewModel.swift */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		B115E52F22C89C4900D5C40F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B115E53022C89CCE00D5C40F /* APIService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		B16C6E1222C5B92E003F1359 = {
 			isa = PBXGroup;
 			children = (
@@ -110,10 +138,12 @@
 				B16C6E1E22C5B92E003F1359 /* AppDelegate.swift */,
 				B16C6E2022C5B92E003F1359 /* ViewController.swift */,
 				B16C6E2222C5B92E003F1359 /* Main.storyboard */,
-				B16C6E4F22C60FD4003F1359 /* iTunesMusicInfo.swift */,
 				B16C6E5522C7585B003F1359 /* MusicHTTP.swift */,
 				B16C6E5122C63D3F003F1359 /* iTunesMusicInfoCell.swift */,
 				B16C6E5322C745FB003F1359 /* LoadingCell.swift */,
+				B115E52F22C89C4900D5C40F /* Service */,
+				B115E52C22C8969F00D5C40F /* Module */,
+				B115E52922C895ED00D5C40F /* Model */,
 				B16C6E2822C5B930003F1359 /* Assets.xcassets */,
 				B16C6E2A22C5B930003F1359 /* LaunchScreen.storyboard */,
 				B16C6E2D22C5B930003F1359 /* Info.plist */,
@@ -273,11 +303,13 @@
 			files = (
 				B16C6E5422C745FC003F1359 /* LoadingCell.swift in Sources */,
 				B16C6E2722C5B92E003F1359 /* iTunesMusicSearch.xcdatamodeld in Sources */,
-				B16C6E5022C60FD4003F1359 /* iTunesMusicInfo.swift in Sources */,
 				B16C6E5622C7585E003F1359 /* MusicHTTP.swift in Sources */,
 				B16C6E5222C63D3F003F1359 /* iTunesMusicInfoCell.swift in Sources */,
+				B115E52E22C896CA00D5C40F /* MusicListViewModel.swift in Sources */,
+				B115E53122C89CCE00D5C40F /* APIService.swift in Sources */,
 				B16C6E2122C5B92E003F1359 /* ViewController.swift in Sources */,
 				B16C6E1F22C5B92E003F1359 /* AppDelegate.swift in Sources */,
+				B115E52B22C8960400D5C40F /* Music.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
