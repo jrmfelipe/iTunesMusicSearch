@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
     
     let session = URLSession.shared
     var searchOffset = 0
-    let searchLimit = 10  // lower the value to test "load more result"
+    let searchLimit = 25  // lower the value to test "load more result"
     var endOfSearchResult = false
     var fetchingMore = false
     
@@ -110,7 +110,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDataSour
                         if let results = resultInfo2!["results"] as? [[String: Any]] {
                             for resultDetail in results {
                                 // iterate here
-                                self.model.append(iTunesMusicInfo(resultDetail)) // adding now value in Model array
+                                let result = iTunesMusicInfo(resultDetail)
+                                if !self.model.contains(result) {
+                                     self.model.append(result) // adding now value in Model array
+                                } else {
+                                    print("Search result \(result) already in the list")
+                                }
                             }
                             if resultCount < self.searchLimit {
                                 self.endOfSearchResult = true

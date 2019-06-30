@@ -23,3 +23,11 @@ struct iTunesMusicInfo {
         self.previewUrl = dictionary["artworkUrl100"] as? String ?? nil
     }
 }
+
+extension iTunesMusicInfo: Equatable {
+    static func == (lhs: iTunesMusicInfo, rhs: iTunesMusicInfo) -> Bool {
+        return lhs.musicTitle == rhs.musicTitle &&
+               lhs.artistName == rhs.artistName &&
+               lhs.albumName == rhs.albumName
+    }
+}
