@@ -1,18 +1,16 @@
 # iTunesMusicSearch
 
-================================
 Issue found when using iTunes Search API
 ================================
 Using paging by adding "offset"  parameter to the URL request will sometime give duplicate result.
-Link 1:   https://itunes.apple.com/search?term=work&offset=0&limit=10
-Link 2:   https://itunes.apple.com/search?term=work&offset=11&limit=10
-Link 3:   https://itunes.apple.com/search?term=work&offset=21&limit=10
+* Link 1:   https://itunes.apple.com/search?term=work&offset=0&limit=10
+* Link 2:   https://itunes.apple.com/search?term=work&offset=11&limit=10
+* Link 3:   https://itunes.apple.com/search?term=work&offset=21&limit=10
 
 Link 2 and 3 will be used when retrieving page 2 and 3 respectively. Result  in link 2 for items 8,9,10  (Link 2) will be duplicated in the results in link 3
 
 A workaround was added.
 
-============
 Developer Note
 ============
 * The code contains the core functional requirement.
